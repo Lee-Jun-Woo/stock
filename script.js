@@ -25,7 +25,33 @@ function deleteStock(event) {
   saveStocks();
 }
 
-function modifyStock(event) {}
+function modifyStock(event) {
+  const stock = event.target.parentElement;
+  const id = parseInt(stock.id);
+  let idx = 0;
+  for (let i = 0; i < stocks.length; i++) {
+    if (stocks[i]["id"] === id) {
+      idx = i;
+    }
+  }
+
+  const random = Math.random();
+  let product = 0;
+  if (random < 0.1) {
+    product = 2;
+  } else if (random < 0.3) {
+    product = 1.4;
+  } else if (random < 0.55) {
+    product = 0.8;
+  } else if (random < 0.8) {
+    product = 0.7;
+  } else {
+    product = 0.5;
+  }
+  stocks[idx]["pri"] *= product;
+  saveStocks();
+  location.reload();
+}
 
 function paintStock(obj) {
   const stock = document.createElement("li");
@@ -38,7 +64,7 @@ function paintStock(obj) {
   modifyButton.innerText = "주가 갱신";
   deleteButton.innerText = "삭제";
   deleteButton.addEventListener("click", deleteStock);
-  // modifyButton.addEventListener("click", modifyStock);
+  modifyButton.addEventListener("click", modifyStock);
 
   stock.appendChild(stockContent);
   stock.appendChild(modifyButton);
