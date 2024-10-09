@@ -20,16 +20,22 @@ function deleteStock(event) {
   stock.remove();
 }
 
+function modifyStock(event) {}
+
 function paintStock(name, price) {
   const stock = document.createElement("li");
   const stockContent = document.createElement("span");
+  const modifyButton = document.createElement("button");
   const deleteButton = document.createElement("button");
 
   stockContent.innerText = `${name}: ${Math.round(price)}준우`;
+  modifyButton.innerText = "주가 갱신";
   deleteButton.innerText = "삭제 (지금은 작동 X)";
   // deleteButton.addEventListener("click", deleteStock);
+  // modifyButton.addEventListener("click", modifyStock);
 
   stock.appendChild(stockContent);
+  stock.appendChild(modifyButton);
   stock.appendChild(deleteButton);
   stockList.appendChild(stock);
 }
