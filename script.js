@@ -49,6 +49,11 @@ function modifyStock(event) {
     product = 0.5;
   }
   stocks[idx]["pri"] *= product;
+  if (stocks[idx]["pri"] < 5) {
+    stocks[idx]["pri"] = 5;
+  } else if (stocks[idx]["pri"] > 50) {
+    stocks[idx]["pri"] = 50;
+  }
   saveStocks();
   location.reload();
 }
@@ -82,7 +87,7 @@ function HandleCreate() {
   nameInput.value = "";
   priceInput.value = "";
 
-  if (name !== "" && price > 0) {
+  if (name !== "" && 5 <= price && price <= 50) {
     const obj = { nam: name, pri: price, id: Date.now() };
     stocks.push(obj);
     paintStock(obj);
