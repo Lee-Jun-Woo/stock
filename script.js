@@ -18,20 +18,26 @@ function number(str) {
 function deleteStock(event) {
   const stock = event.target.parentElement;
   stock.remove();
+  const id = parseInt(stock.id);
+  stocks = stocks.filter(function (item) {
+    return item["id"] !== id;
+  });
+  saveStocks();
 }
 
 function modifyStock(event) {}
 
-function paintStock(name, price) {
+function paintStock(obj) {
   const stock = document.createElement("li");
   const stockContent = document.createElement("span");
   const modifyButton = document.createElement("button");
   const deleteButton = document.createElement("button");
 
-  stockContent.innerText = `${name}: ${Math.round(price)}준우`;
+  stock.id = obj["id"];
+  stockContent.innerText = `${obj["nam"]}: ${Math.round(obj["pri"])}준우`;
   modifyButton.innerText = "주가 갱신";
-  deleteButton.innerText = "삭제 (지금은 작동 X)";
-  // deleteButton.addEventListener("click", deleteStock);
+  deleteButton.innerText = "삭제";
+  deleteButton.addEventListener("click", deleteStock);
   // modifyButton.addEventListener("click", modifyStock);
 
   stock.appendChild(stockContent);
@@ -42,7 +48,6 @@ function paintStock(name, price) {
 
 function saveStocks() {
   localStorage.setItem("stocks", JSON.stringify(stocks));
-  console.log("saved");
 }
 
 function HandleCreate() {
@@ -52,26 +57,20 @@ function HandleCreate() {
   priceInput.value = "";
 
   if (name !== "" && price > 0) {
-    const obj = { nam: name, pri: price };
+    const obj = { nam: name, pri: price, id: Date.now() };
     stocks.push(obj);
-    paintStock(name, price);
+    paintStock(obj);
     saveStocks();
   }
 }
 
 submit.addEventListener("click", HandleCreate);
 
-function loadStocks(item) {
-  const name = item["nam"];
-  const price = item["pri"];
-  paintStock(name, price);
-}
-
 const savedStocks = localStorage.getItem("stocks");
 if (savedStocks) {
   const parsedStocks = JSON.parse(savedStocks);
   stocks = parsedStocks;
-  parsedStocks.forEach(loadStocks);
+  parsedStocks.forEach(paintStock);
 }
 
 function resetStocks() {
