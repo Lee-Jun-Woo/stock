@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>랜덤 주식 생성기</title>
+  </head>
+  <body>
+    <header>
+      <h1>랜덤 주식 생성기</h1>
+      <p>주가가 랜덤하게 변하는 주식을 만들어 줍니다.</p>
+    </header>
+    <hr />
+    <main>
+      <section>
+        <h2>주식 생성</h2>
+        <label for="name">주식 이름 입력</label>
+        <input
+          type="text"
+          name="stock-name"
+          placeholder="주식 이름"
+          id="name"
+        />
+        <label for="price">초기 주가 입력</label>
+        <input
+          type="number"
+          name="default-price"
+          placeholder="5"
+          min="1"
+          id="price"
+        />
+        <button id="final">생성</button>
+        <button id="reset">모든 주식 삭제</button>
+      </section>
+      <hr />
+      <section>
+        <h2>주식 목록</h2>
+        <ul id="stock-list"></ul>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
