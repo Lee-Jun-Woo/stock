@@ -35,25 +35,20 @@ function modifyStock(event) {
     }
   }
 
-  const random = Math.random();
-  let product = 0;
-  if (random < 0.1) {
-    product = 2;
-  } else if (random < 0.3) {
-    product = 1.4;
-  } else if (random < 0.55) {
-    product = 0.8;
-  } else if (random < 0.8) {
-    product = 0.7;
+  const r = Math.random();
+  const curPrice = stocks[idx]["pri"];
+  let product = (-1.6 * (r ** 3 - r) + 0.6);
+  if (curPrice < 20) {
+    product += 0.4;
+  } else if (curPrice < 50) {
+    product += (-0.01 * curPrice + 0.5);
+  } else if (curPrice < 70) {
+  } else if (70 <= curPrice < 100) {
+    product += (-0.01 * curPrice + 0.7);
   } else {
-    product = 0.5;
+    product -= 0.4;
   }
   stocks[idx]["pri"] *= product;
-  if (stocks[idx]["pri"] < 5) {
-    stocks[idx]["pri"] = 5;
-  } else if (stocks[idx]["pri"] > 50) {
-    stocks[idx]["pri"] = 50;
-  }
   saveStocks();
   location.reload();
 }
@@ -87,7 +82,7 @@ function HandleCreate() {
   nameInput.value = "";
   priceInput.value = "";
 
-  if (name !== "" && 5 <= price && price <= 50) {
+  if (name !== "" && 15 <= price && price <= 95) {
     const obj = { nam: name, pri: price, id: Date.now() };
     stocks.push(obj);
     paintStock(obj);
